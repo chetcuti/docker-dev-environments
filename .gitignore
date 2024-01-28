@@ -1,0 +1,12 @@
+/dev-php.8.1.mariadb.10.4--01/build/mariadb-init/01-databases.sql
+/dev-php.8.1.mariadb.10.4--01/html
+/dev-php.8.1.mariadb.10.4--01/log
+/dev-php.8.1.mysql.5.7--02/build/mysql-init/01-databases.sql
+/dev-php.8.1.mysql.5.7--02/html
+/dev-php.8.1.mysql.5.7--02/log
+/dev-php.8.2.9.mariadb.11.1.2--03/build/mariadb-init/01-databases.sql
+/dev-php.8.2.9.mariadb.11.1.2--03/html
+/dev-php.8.2.9.mariadb.11.1.2--03/log
+/dev-php.8.2.9.mysql.8.1.0--04/build/mysql-init/01-databases.sql
+/dev-php.8.2.9.mysql.8.1.0--04/html
+/dev-php.8.2.9.mysql.8.1.0--04/log

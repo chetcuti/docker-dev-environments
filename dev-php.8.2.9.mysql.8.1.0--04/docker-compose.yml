@@ -1,0 +1,83 @@
+version: '3.7'
+
+services:
+
+  dev-web:
+    build:
+      context: './build/php-apache'
+    container_name: 'dev-web'
+    depends_on:
+      - 'dev-db'
+    networks:
+      - 'backend'
+      - 'frontend'
+    ports:
+      - '80:80'
+    restart: 'unless-stopped'
+    volumes:
+      - './html:/var/www/html'
+      - './log/php-apache:/var/log'
+
+  dev-db:
+    build:
+      context: './build/mysql'
+    container_name: 'dev-db'
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'no'
+      MYSQL_ROOT_PASSWORD: 'password'
+      TZ: 'America/Vancouver'
+    networks:
+      - 'frontend'
+      - 'backend'
+    ports:
+      - '3306:3306'
+    restart: 'unless-stopped'
+    volumes:
+      - 'db:/var/lib/mysql'
+      - './config/mysql:/etc/mysql/conf.d'
+      - './log/mysql:/var/log'
+      - './build/mysql-init:/docker-entrypoint-initdb.d'
+
+  dev-phpmyadmin:
+    build:
+      context: './build/phpmyadmin'
+    container_name: 'dev-phpmyadmin'
+    depends_on:
+      - 'dev-db'
+      - 'dev-web'
+    environment:
+      PMA_HOST: 'dev-db'
+    networks:
+      - 'backend'
+      - 'frontend'
+    ports:
+      - '8080:80'
+    restart: 'unless-stopped'
+    volumes:
+      - './log/phpmyadmin:/var/log'
+  
+  dev-mail:
+    build:
+      context: './build/mailhog'
+    container_name: 'dev-mail'
+    networks:
+      - 'backend'
+      - 'frontend'
+    ports:
+      - '8081:8025'
+      - '8082:1025'
+    restart: 'unless-stopped'
+    volumes:
+      - './log/mailhog:/var/log'
+# Disable's MailHog's logging, since it has a ton of output
+# Only enable this for specific testing
+    logging:
+      driver: 'none' 
+
+networks:
+  backend:
+  frontend:
+
+volumes:
+    db:
+
